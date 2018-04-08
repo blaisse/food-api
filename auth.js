@@ -16,6 +16,7 @@ exports.signupRestaurant = async (req, res, next) => {
     console.log('pass', req.body.password);
 
     const nazwa = req.body.nazwa;
+    const adres = req.body.adres;
     const password = req.body.password;
 
     if(!nazwa || !password) return res.status(422).send({ error: "Puste pola" });
@@ -24,9 +25,9 @@ exports.signupRestaurant = async (req, res, next) => {
     if(restaurant){
         return res.status(422).send({ error: "Email zajęty" });
     }
-    const newRestaurant = new Restaurant({ nazwa, password });
+    const newRestaurant = new Restaurant({ nazwa, password, adres });
     newRestaurant.save().then(() => {
-        res.json({ token: encodeToken(newRestaurant), nazwa });
+        res.json({ token: encodeToken(newRestaurant), nazwa, adres });
     }).catch((e) => {
         res.status(422).send(e);
     });
