@@ -9,7 +9,7 @@ const Restaurant = mongoose.model('restaurants');
 
 const localOptions = { usernameField: 'nazwa' };
 
-const localLogin = new LocalStrategy(localOptions, async function(username, password, done){
+const localLogin = new LocalStrategy(localOptions, async function(nazwa, password, done){
     const restaurant = await Restaurant.findOne({ nazwa });
     restaurant.comparePasswords(password, function(err, isMatch){
         if(err){
