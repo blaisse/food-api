@@ -11,15 +11,19 @@ const localOptions = { usernameField: 'nazwa' };
 
 const localLogin = new LocalStrategy(localOptions, async function(nazwa, password, done){
     const restaurant = await Restaurant.findOne({ nazwa });
-    restaurant.comparePasswords(password, function(err, isMatch){
-        if(err){
-            return done(err);
-        }
-        if(!isMatch){
-            return done(null, false);
-        }
-        return done(null, restaurant);
-    });
+    if(restaurant){
+        restaurant.comparePasswords(password, function(err, isMatch){
+            if(err){
+                return done(err);
+            }
+            if(!isMatch){
+                return done(null, false);
+            }
+            return done(null, restaurant);
+        });
+    } else {
+        return done(null, false);
+    }
 });
 
 const jwtOptions = {

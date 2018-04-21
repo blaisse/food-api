@@ -44,7 +44,7 @@ restaurantSchema.methods.comparePasswords = function(inputPassword, callback){
     bcrypt.compare(inputPassword, this.password, function(err, isMatch){
         if(err){
             // console.log('err?');
-            return callback("Błędne hasło");//+r
+            return callback(err);//+r
         }
         // console.log('matching?', isMatch);//FALSE?
         callback(null, isMatch);
