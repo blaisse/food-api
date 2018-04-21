@@ -16,7 +16,7 @@ const localLogin = new LocalStrategy(localOptions, async function(nazwa, passwor
             return done(err);
         }
         if(!isMatch){
-            return done(null, { error: "Błędne dane" });
+            return done(null, false);
         }
         return done(null, restaurant);
     });

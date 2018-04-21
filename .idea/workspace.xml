@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4b5eb5eb-c20a-4d8c-8f72-d9e848310bce" name="Default" comment="" />
+    <list default="true" id="4b5eb5eb-c20a-4d8c-8f72-d9e848310bce" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/passport.js" beforeDir="false" afterPath="$PROJECT_DIR$/passport.js" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -26,7 +28,7 @@
       <file leaf-file-name="auth.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/auth.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
+            <state relative-caret-position="60">
               <caret line="29" column="66" selection-start-line="29" selection-start-column="66" selection-end-line="29" selection-end-column="66" />
             </state>
           </provider>
@@ -62,7 +64,7 @@
       <file leaf-file-name="passport.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/passport.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
+            <state relative-caret-position="270">
               <caret line="18" column="35" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="35" />
             </state>
           </provider>
@@ -116,7 +118,7 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="653" />
+    <option name="x" value="531" />
     <option name="y" value="23" />
     <option name="width" value="1244" />
     <option name="height" value="1015" />
@@ -198,15 +200,15 @@
       <workItem from="1523046621433" duration="4841000" />
       <workItem from="1523174790523" duration="9936000" />
       <workItem from="1523268798057" duration="973000" />
-      <workItem from="1524347213558" duration="497000" />
+      <workItem from="1524347213558" duration="744000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16998000" />
+    <option name="totallyTimeSpent" value="17245000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="653" y="23" width="1244" height="1015" extended-state="0" />
+    <frame x="531" y="23" width="1244" height="1015" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24276528" />
@@ -462,13 +464,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/auth.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="66" selection-start-line="29" selection-start-column="66" selection-end-line="29" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/Restaurant.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="675">
@@ -476,9 +471,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/auth.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="29" column="66" selection-start-line="29" selection-start-column="66" selection-end-line="29" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/passport.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
+        <state relative-caret-position="270">
           <caret line="18" column="35" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="35" />
         </state>
       </provider>
