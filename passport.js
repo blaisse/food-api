@@ -22,7 +22,7 @@ const localLogin = new LocalStrategy(localOptions, async function(nazwa, passwor
             return done(null, restaurant);
         });
     } else {
-        return done(null, false);
+        return done(null, false, { error: "Błędne dane" });
     }
 });
 
