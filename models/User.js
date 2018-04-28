@@ -6,7 +6,8 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
     nazwa: { type: String, unique: true },
     password: String,
-    komentarze: { type: Array }
+    adres: String,
+    komentarze: [{ type: Schema.Types.ObjectId, ref: 'comment' }],
 });
 
 userSchema.pre('save', function(next){
@@ -30,12 +31,11 @@ userSchema.pre('save', function(next){
 userSchema.methods.comparePasswords = function(inputPassword, callback){
     bcrypt.compare(inputPassword, this.password, function(err, isMatch){
         if(err){
-            // console.log('err?');
             return callback(err);//+r
         }
-        // console.log('matching?', isMatch);//FALSE?
         callback(null, isMatch);
     });
 }
 
+//populate refers to 'users' here
 const modelClass = mongoose.model('users', userSchema);

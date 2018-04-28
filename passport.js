@@ -6,10 +6,12 @@ const mongoose = require('mongoose');
 
 const keys = require('./config/keys');
 const Restaurant = mongoose.model('restaurants');
+const User = mongoose.model('users');
 
-const localOptions = { usernameField: 'nazwa' };
+const localOptions = { usernameField: 'nazwa', passReqToCallback: true };
 
-const localLogin = new LocalStrategy(localOptions, async function(nazwa, password, done){
+const localLogin = new LocalStrategy(localOptions, async function(req, nazwa, password, done){
+    console.log('type', req.body.type);
     const restaurant = await Restaurant.findOne({ nazwa });
     if(restaurant){
         restaurant.comparePasswords(password, function(err, isMatch){
@@ -22,19 +24,28 @@ const localLogin = new LocalStrategy(localOptions, async function(nazwa, passwor
             return done(null, restaurant);
         });
     } else {
-        return done(null, false, { error: "Błędne dane" });
+        return done(null, false);
     }
 });
 
 const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromHeader('auth'),
-    secretOrKey: keys.secret
+    secretOrKey: keys.secret,
+    passReqToCallback: true
 };
 
-const jwtLogin = new JwtStrategy(jwtOptions, async function(payload, done){
-    const user = await Restaurant.findById(payload.sub);
-    if(user){
-        done(null, user);
+//Different approach: add type to user and restaurant schema?
+//req.body - not for GET
+const jwtLogin = new JwtStrategy(jwtOptions, async function(req, payload, done){
+    let account;
+    if(req.body.type === 'user'){
+        account = await User.findById(payload.sub);
+    } else {
+        account = await Restaurant.findById(payload.sub);
+    }
+    // const user = await Restaurant.findById(payload.sub);
+    if(account){
+        done(null, account);
     } else {
         done(null, false);
     }

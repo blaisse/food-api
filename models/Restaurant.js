@@ -8,16 +8,9 @@ const restaurantSchema = new Schema({
     password: String,
     adres: String,
     opis: String,
-    menu: {
-        dania_glowne: { type: Array },
-        zupy: { type: Array },
-        makarony: { type: Array },
-        desery: { type: Array },
-        przystawki: { type: Array },
-        salatki: { type: Array }
-    },
+    menu: [{ type: Schema.Types.ObjectId, ref: 'dishes' }],
     ocena: Number,
-    komentarze: { type: Array }
+    //komentarze: { type: Array }
 });
 
 restaurantSchema.pre('save', function(next){

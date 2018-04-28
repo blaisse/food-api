@@ -14,45 +14,59 @@ function encodeToken(user){
 exports.signupRestaurant = async (req, res, next) => {
     console.log('rest', req.body.nazwa);
     console.log('pass', req.body.password);
+    console.log('type', req.body.type);
 
     const nazwa = req.body.nazwa;
     const adres = req.body.adres;
     const password = req.body.password;
+    const type = req.body.type;
 
     if(!nazwa || !password) return res.status(422).send({ error: "Puste pola" });
 
-    const restaurant = await Restaurant.findOne({ nazwa });
-    if(restaurant){
-        return res.status(422).send({ error: "Email zajęty" });
+    let account;
+
+    if(type === 'restaurant'){
+        account = await Restaurant.findOne({ nazwa });
+    } else if(type === 'user'){
+        account = await User.findOne({ nazwa });
     }
-    const newRestaurant = new Restaurant({ nazwa, password, adres });
-    newRestaurant.save().then(() => {
-        res.json({ token: encodeToken(newRestaurant), nazwa, adres });
+    if(account){
+        return res.status(422).send({ error: "Nazwa jest zajęta" });
+    }
+    let newAccount;
+    if(type === 'restaurant'){
+        newAccount = new Restaurant({ nazwa, password, adres });
+    } else if(type === 'user'){
+        newAccount = new User({ nazwa, password, adres });
+    }
+    newAccount.save().then(() => {
+        res.json({ token: encodeToken(newAccount), nazwa, adres });
     }).catch((e) => {
         res.status(422).send(e);
     });
+
 };
 
-exports.signupUser = async (req, res, next) => {
-    console.log('rest', req.body.nazwa);
-    console.log('pass', req.body.password);
-
-    const nazwa = req.body.nazwa;
-    const password = req.body.password;
-
-    if(!nazwa || !password) return res.status(422).send({ error: "Puste pola" });
-
-    const restaurant = await User.findOne({ nazwa });
-    if(restaurant){
-        return res.status(422).send({ error: "Email zajęty" });
-    }
-    const newRestaurant = new User({ nazwa, password });
-    newRestaurant.save().then(() => {
-        res.json({ token: encodeToken(newRestaurant), nazwa });
-    }).catch((e) => {
-        res.status(422).send(e);
-    });
-};
+// exports.signupUser = async (req, res, next) => {
+//     console.log('rest', req.body.nazwa);
+//     console.log('pass', req.body.password);
+//
+//     const nazwa = req.body.nazwa;
+//     const password = req.body.password;
+//
+//     if(!nazwa || !password) return res.status(422).send({ error: "Puste pola" });
+//
+//     const restaurant = await User.findOne({ nazwa });
+//     if(restaurant){
+//         return res.status(422).send({ error: "Email zajęty" });
+//     }
+//     const newRestaurant = new User({ nazwa, password });
+//     newRestaurant.save().then(() => {
+//         res.json({ token: encodeToken(newRestaurant), nazwa });
+//     }).catch((e) => {
+//         res.status(422).send(e);
+//     });
+// };
 
 exports.signin = function(req, res, next){
     res.send({ token: encodeToken(req.user), nazwa: req.user.nazwa });
