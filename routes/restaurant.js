@@ -18,7 +18,7 @@ module.exports = (app, requireAuth) => {
 
     //populate menu
     app.get('/restauracja/:id', async (req, res) => {
-        const restauracja = await Restaurant.findOne({ _id: req.params.id }).populate({
+        const restauracja = await Restaurant.findOne({ _id: req.params.id }, { password: 0 }).populate({
             path: "menu",
             populate: {
                 path: "komentarze",
@@ -56,6 +56,7 @@ module.exports = (app, requireAuth) => {
 
             const { rodzaj, nazwa, cena, czas, img } = req.body;
             const dish = new Dish({ nazwa, cena, czas, img, rodzaj });
+            // dish.restauracja = restauracja;
             restauracja.menu.push(dish);
 
             Promise.all([ restauracja.save(), dish.save() ]).then(() => {

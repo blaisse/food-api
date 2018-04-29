@@ -12,20 +12,39 @@ const localOptions = { usernameField: 'nazwa', passReqToCallback: true };
 
 const localLogin = new LocalStrategy(localOptions, async function(req, nazwa, password, done){
     console.log('type', req.body.type);
-    const restaurant = await Restaurant.findOne({ nazwa });
-    if(restaurant){
-        restaurant.comparePasswords(password, function(err, isMatch){
+    let account;
+    if(req.body.type === 'user'){
+        account = await User.findOne({ nazwa });
+    } else {
+        account = await Restaurant.findOne({ nazwa });
+    }
+    if(account){
+        account.comparePasswords(password, function(err, isMatch){
             if(err){
                 return done(err);
             }
             if(!isMatch){
                 return done(null, false);
             }
-            return done(null, restaurant);
+            return done(null, account);
         });
     } else {
         return done(null, false);
     }
+    // const restaurant = await Restaurant.findOne({ nazwa });
+    // if(restaurant){
+    //     restaurant.comparePasswords(password, function(err, isMatch){
+    //         if(err){
+    //             return done(err);
+    //         }
+    //         if(!isMatch){
+    //             return done(null, false);
+    //         }
+    //         return done(null, restaurant);
+    //     });
+    // } else {
+    //     return done(null, false);
+    // }
 });
 
 const jwtOptions = {

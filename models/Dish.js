@@ -7,6 +7,7 @@ const DishSchema = new Schema({
     czas: Number,
     img: String,
     rodzaj: String,
+    // restauracja: { type: Schema.Types.ObjectId, ref: 'restaurant' },
     komentarze: [{ type: Schema.Types.ObjectId, ref: 'comment' }]
 });
 
