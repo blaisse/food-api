@@ -24,7 +24,7 @@ module.exports = (app) => {
                 user.komentarze.push(comment);
 
                 Promise.all([ comment.save(), dish.save(), user.save() ]).then(() => {
-                    res.send(comment);
+                    res.send(comment.populate("autor"));
                 });
             }
         }
