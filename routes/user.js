@@ -28,7 +28,7 @@ module.exports = (app) => {
                 // });
 
                 const resp = {};
-                resp.user = user.nazwa;
+                resp.autor = user;
                 resp.tresc = comment.tresc;
                 resp._id = comment._id;
                 // resp.comment = comment;
