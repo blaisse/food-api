@@ -23,8 +23,19 @@ module.exports = (app) => {
                 dish.komentarze.unshift(comment);
                 user.komentarze.push(comment);
 
+                // Comment.populate(comment, { path: "autor" }, (err, populatedComment) => {
+                //
+                // });
+
+                const resp = {};
+                resp.user = user.nazwa;
+                resp.tresc = comment.tresc;
+                resp._id = comment._id;
+                // resp.comment = comment;
+                // console.log(resp);
+
                 Promise.all([ comment.save(), dish.save(), user.save() ]).then(() => {
-                    res.send(comment.populate({ path: "autor" }));
+                    res.send(resp);
                 });
             }
         }
