@@ -10,9 +10,11 @@ const Dish = mongoose.model('dishes');
 const requireAuth = passport.authenticate('jwt', { session: false });
 
 module.exports = (app) => {
+
     app.get('/komentarzeUser', async (req, res) => {
         res.send(req.user.komentarze);
     });
+
     app.post('/komentarz', requireAuth, async (req, res) => {
         // const user = User.findOne({ nazwa: req.user.nazwa });
         const user = req.user;
@@ -34,5 +36,17 @@ module.exports = (app) => {
                 });
             }
         }
-    })
+    });
+
+    app.post('/edycja', requireAuth, async (req, res) => {
+        //User and Restaurant have the same editable fields here
+        const user = req.user;
+
+        user.nazwa = req.body.nazwa;
+        user.adres = req.body.adres;
+
+        user.save().then((savedUser) => {
+            res.send({ nazwa: savedUser.nazwa, adres: savedUser.adres });
+        });
+    });
 };
