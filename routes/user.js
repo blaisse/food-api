@@ -39,6 +39,7 @@ module.exports = (app) => {
     });
 
     app.post('/edycja', requireAuth, async (req, res) => {
+        //Check duplicate names..
         //User and Restaurant have the same editable fields here
         const user = req.user;
 

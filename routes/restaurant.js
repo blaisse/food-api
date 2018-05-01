@@ -16,6 +16,23 @@ module.exports = (app, requireAuth) => {
         res.send(restaurants);
     });
 
+    app.post('/listadan', requireAuth, async (req, res) => {
+        const restaurant = await Restaurant.findOne({ nazwa: req.user.nazwa }, { password: 0 }).populate({
+            path: "menu"
+        });
+        const types = {};
+        restaurant.menu.forEach((item) => {
+            if(!types[item.rodzaj]){
+                types[item.rodzaj] = true;
+            }
+        });
+        const typesArray = [];
+        Object.keys(types).forEach((item) => {
+            typesArray.push(item);
+        });
+        res.send(typesArray);
+    });
+
     app.get('/dania/:restauracjaId/:rodzaj', async (req, res) => {
         const restauracja = await Restaurant.findById(req.params.restauracjaId, { password: 0 }).populate({
             path: "menu",
