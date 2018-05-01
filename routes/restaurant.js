@@ -16,6 +16,28 @@ module.exports = (app, requireAuth) => {
         res.send(restaurants);
     });
 
+    app.get('/dania/:restauracjaId/:rodzaj', async (req, res) => {
+        const restauracja = await Restaurant.findById(req.params.restauracjaId, { password: 0 }).populate({
+            path: "menu",
+            populate: {
+                path: "komentarze",
+                model: "comments",
+                populate: {
+                    path: "autor",
+                    select: ["nazwa"],
+                    model: "users"
+                }
+            }
+        });
+        if(restauracja){
+            // console.log('restauracja', restauracja);
+            const dania = restauracja.menu.filter((danie) => {
+                return danie.rodzaj === req.params.rodzaj;
+            });
+            res.send(dania);
+        }
+    });
+
     //populate menu
     app.get('/restauracja/:id', async (req, res) => {
         const restauracja = await Restaurant.findOne({ _id: req.params.id }, { password: 0 }).populate({
