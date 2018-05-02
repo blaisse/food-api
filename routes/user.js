@@ -21,10 +21,10 @@ module.exports = (app) => {
         if(user){
             const dish = await Dish.findById(req.body.dish);
             if(dish){
-                const comment = new Comment({ tresc: req.body.tresc, autor: user });
+                const comment = new Comment({ tresc: req.body.tresc, autor: user, ocena: req.body.ocena });
                 dish.komentarze.unshift(comment);
                 user.komentarze.push(comment);
-
+                // console.log("from /komentarz", dish.srednia);
                 const resp = {};
                 resp.autor = user;
                 resp.tresc = comment.tresc;

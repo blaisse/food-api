@@ -95,6 +95,7 @@ module.exports = (app, requireAuth) => {
 
             const { rodzaj, nazwa, cena, czas, img } = req.body;
             const dish = new Dish({ nazwa, cena, czas, img, rodzaj });
+            // console.log('srednia', dish.srednia);
             // dish.restauracja = restauracja;
             restauracja.menu.push(dish);
 
