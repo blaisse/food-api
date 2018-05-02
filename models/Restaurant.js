@@ -16,21 +16,32 @@ const restaurantSchema = new Schema({
 restaurantSchema.pre('save', function(next){
     //check whether it's a new user or .save() - it would call .pre() again
     //and change hash
-    modelClass.findOne({ nazwa: this.nazwa }).then((found) => {
-        if(!found){
-            const user = this;
-            bcrypt.genSalt(10, function(err, salt){
-                if(err) return next(err);
-                bcrypt.hash(user.password, salt, null, function(err, hash){
-                    if(err) return next(err);
-                    user.password = hash;
-                    next();
-                });
-            });
-        } else {
+
+    //Find by id - it doesn't change - if there is such a user don't rehash password
+    modelClass.findById(this.id).then((found) => {
+        if(found){
             next();
+        } else {
+
+            modelClass.findOne({ nazwa: this.nazwa }).then((found) => {
+                if(!found){
+                    const user = this;
+                    bcrypt.genSalt(10, function(err, salt){
+                        if(err) return next(err);
+                        bcrypt.hash(user.password, salt, null, function(err, hash){
+                            if(err) return next(err);
+                            user.password = hash;
+                            next();
+                        });
+                    });
+                } else {
+                    next();
+                }
+            });
+
         }
     });
+
 });
 
 restaurantSchema.methods.comparePasswords = function(inputPassword, callback){
