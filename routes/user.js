@@ -29,6 +29,7 @@ module.exports = (app) => {
                 resp.autor = user;
                 resp.tresc = comment.tresc;
                 resp._id = comment._id;
+                resp.ocena = comment.ocena;
                 // resp.comment = comment;
 
                 Promise.all([ comment.save(), dish.save(), user.save() ]).then(() => {
