@@ -11,7 +11,7 @@ module.exports = (app, requireAuth) => {
         if(user){
             const { dishes, totalPrice } = req.body;
             const date = new Date().getTime();
-
+            //same date in orders - ordered at the same time
             const obj = {};
             dishes.forEach((item) => {
                 if(!obj[item.restaurantId]){
@@ -39,7 +39,7 @@ module.exports = (app, requireAuth) => {
             });
 
             user.save().then((sUser) => {
-                res.send(user.zamowienia);
+                res.send({ orders: sUser.zamowienia });
             });
         }
     });
