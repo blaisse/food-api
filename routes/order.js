@@ -9,7 +9,7 @@ module.exports = (app, requireAuth) => {
     app.post('/orders', requireAuth, async (req, res) => {
         //Populate orders
         const user = await User.findById(req.user.id).populate({ path: "zamowienia" });
-        res.send(user.zamowienia);
+        res.send({ orders: user.zamowienia });
     });
 
     app.post('/order', requireAuth, async (req, res) => {
