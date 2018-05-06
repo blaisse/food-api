@@ -6,6 +6,12 @@ const Order = mongoose.model('orders');
 
 module.exports = (app, requireAuth) => {
 
+    app.post('/orders', requireAuth, async (req, res) => {
+        //Populate orders
+        const user = await User.findById(req.user.id).populate({ path: "zamowienia" });
+        res.send(user.zamowienia);
+    });
+
     app.post('/order', requireAuth, async (req, res) => {
         const user = req.user;
         if(user){
