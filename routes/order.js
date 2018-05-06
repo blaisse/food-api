@@ -40,7 +40,7 @@ module.exports = (app, requireAuth) => {
 
                 let price = 0;
                 obj[item].forEach((p) => {
-                    price += p.price;
+                    price += p.price * p.amount;
                 });
 
                 const order = new Order({ dishes: sepatateDishes, price, date, user, restaurant });
