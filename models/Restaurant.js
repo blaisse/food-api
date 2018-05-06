@@ -9,6 +9,7 @@ const restaurantSchema = new Schema({
     adres: String,
     opis: String,
     menu: [{ type: Schema.Types.ObjectId, ref: 'dishes' }],
+    zamowienia: [{ type: Schema.Types.ObjectId, ref: 'orders' }],
     ocena: Number,
     //komentarze: { type: Array }
 });

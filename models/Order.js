@@ -9,7 +9,8 @@ const OrderSchema = new Schema({
     restaurant: { type: Schema.Types.ObjectId, ref: 'restaurant' },
     // dishes: { type: Schema.Types.ObjectId, ref: 'dish' },
     dishes: [],
-    totalPrice: Number
+    price: Number,
+    date: Number
 });
 
 const orderModel = mongoose.model('orders', OrderSchema);

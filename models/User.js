@@ -8,6 +8,7 @@ const userSchema = new Schema({
     password: String,
     adres: String,
     komentarze: [{ type: Schema.Types.ObjectId, ref: 'comment' }],
+    zamowienia: [{ type: Schema.Types.ObjectId, ref: 'orders' }]
 });
 
 userSchema.pre('save', function(next){
