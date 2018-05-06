@@ -20,7 +20,7 @@ module.exports = (app, requireAuth) => {
                 obj[item.restaurantId].push(item);
 
             });
-
+            const orders = [];
             Object.keys(obj).forEach(async (item) => {
                 const restaurant = await Restaurant.findById(item);
                 const sepatateDishes = obj[item];
@@ -31,7 +31,7 @@ module.exports = (app, requireAuth) => {
                 });
 
                 const order = new Order({ dishes: sepatateDishes, price, date, user, restaurant });
-
+                orders.push(order);
                 user.zamowienia.unshift(order);
                 restaurant.zamowienia.unshift(order);
 
@@ -39,7 +39,7 @@ module.exports = (app, requireAuth) => {
             });
 
             user.save().then((sUser) => {
-                res.send({ orders: sUser.zamowienia });
+                res.send({ orders });
             });
         }
     });
