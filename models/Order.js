@@ -7,7 +7,8 @@ const { Schema } = mongoose;
 const OrderSchema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: 'user' },
     restaurant: { type: Schema.Types.ObjectId, ref: 'restaurant' },
-    dishes: { type: Schema.Types.ObjectId, ref: 'dish' },
+    // dishes: { type: Schema.Types.ObjectId, ref: 'dish' },
+    dishes: [],
     totalPrice: Number
 });
 
