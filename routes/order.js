@@ -8,7 +8,14 @@ module.exports = (app, requireAuth) => {
 
     app.post('/orders', requireAuth, async (req, res) => {
         //Populate orders
-        const user = await User.findById(req.user.id).populate({ path: "zamowienia" });
+        const user = await User.findById(req.user.id).populate({
+            path: "zamowienia",
+            populate: {
+                path: "restaurant",
+                select: ["nazwa", "_id"],
+                model: "restaurants"
+            }
+        });
         res.send({ orders: user.zamowienia });
     });
 
