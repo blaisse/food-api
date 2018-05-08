@@ -36,7 +36,7 @@ module.exports = (app, requireAuth) => {
         const user = req.user;
         if(user){
             const { dishes, totalPrice } = req.body;
-            // console.log('dishes', dishes);
+
             const date = new Date().getTime();
             //same date in orders - ordered at the same time
             const obj = {};
@@ -47,7 +47,7 @@ module.exports = (app, requireAuth) => {
                 obj[item.restaurantId].push(item);
 
             });
-            // console.log('obj', obj);
+
             const orders = [];
             Object.keys(obj).forEach(async (item) => {
                 const restaurant = await Restaurant.findById(item);
@@ -63,12 +63,12 @@ module.exports = (app, requireAuth) => {
                 user.zamowienia.unshift(order);
                 restaurant.zamowienia.unshift(order);
 
-                // Promise.all([ order.save(), restaurant.save() ]);
+                Promise.all([ order.save(), restaurant.save() ]);
             });
             //
-            // user.save().then((sUser) => {
-            //     res.send({ orders });
-            // });
+            user.save().then((sUser) => {
+                res.send({ orders });
+            });
         }
     });
 
