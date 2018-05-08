@@ -22,9 +22,9 @@ module.exports = (app, requireAuth) => {
             user = await Restaurant.findById(req.user.id).populate({
                 path: "zamowienia",
                 populate: {
-                    path: "restaurant",
+                    path: "user",
                     select: ["nazwa", "_id"],
-                    model: "restaurants"
+                    model: "users"
                 }
             });
         }
