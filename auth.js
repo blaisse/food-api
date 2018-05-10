@@ -69,6 +69,6 @@ exports.signupRestaurant = async (req, res, next) => {
 // };
 
 exports.signin = function(req, res, next){
-    console.log('login', req.user);
-    res.send({ token: encodeToken(req.user), nazwa: req.user.nazwa, adres: req.user.adres });
+    console.log('login', req.user.img);
+    res.send({ token: encodeToken(req.user), nazwa: req.user.nazwa, adres: req.user.adres, img: req.user.img || "" });
 }
