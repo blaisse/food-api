@@ -47,8 +47,12 @@ module.exports = (app) => {
         user.nazwa = req.body.nazwa;
         user.adres = req.body.adres;
 
+        if(req.body.img){
+            user.img = req.body.img;
+        }
+
         user.save().then((savedUser) => {
-            res.send({ nazwa: savedUser.nazwa, adres: savedUser.adres });
+            res.send({ nazwa: savedUser.nazwa, adres: savedUser.adres, img: req.body.img || "" });
         });
     });
 };
