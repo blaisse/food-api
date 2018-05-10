@@ -40,7 +40,7 @@ exports.signupRestaurant = async (req, res, next) => {
         newAccount = new User({ nazwa, password, adres });
     }
     newAccount.save().then(() => {
-        res.json({ token: encodeToken(newAccount), nazwa, adres });
+        res.json({ token: encodeToken(newAccount), nazwa, adres, img: newAccount.img || "" });
     }).catch((e) => {
         res.status(422).send(e);
     });
