@@ -12,7 +12,7 @@ module.exports = (app, requireAuth) => {
 
     app.get('/restauracje', async (req, res) => {
         //fetch nazwa and adres, id is sent by default
-        const restaurants = await Restaurant.find({}, { nazwa: 1, adres: 1 });
+        const restaurants = await Restaurant.find({}, { nazwa: 1, adres: 1, img: 1 });
         res.send(restaurants);
     });
 
