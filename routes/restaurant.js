@@ -5,6 +5,10 @@ const Comment = mongoose .model('comments');
 
 module.exports = (app, requireAuth) => {
 
+    app.post('auth', requireAuth, (req, res) => {
+        res.send(req.user);
+    });
+
     app.get('/restauracje2', async (req, res) => {
         const restaurants = await Restaurant.find({});
         res.send(restaurants);
