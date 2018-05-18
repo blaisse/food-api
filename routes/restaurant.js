@@ -5,7 +5,7 @@ const Comment = mongoose .model('comments');
 
 module.exports = (app, requireAuth) => {
 
-    app.post('auth', requireAuth, (req, res) => {
+    app.post('/auth', requireAuth, (req, res) => {
         res.send(req.user);
     });
 
