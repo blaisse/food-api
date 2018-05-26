@@ -11,6 +11,8 @@ const restaurantSchema = new Schema({
     menu: [{ type: Schema.Types.ObjectId, ref: 'dishes' }],
     zamowienia: [{ type: Schema.Types.ObjectId, ref: 'orders' }],
     ocena: Number,
+    x: String,
+    y: String,
     img: { type: String, default: "http://www.macq01.com.au/d/macq/media/Eat_and_Drink/__thumbs_603_363_crop/Landscape_Restaurant__Grill_8f0622.jpg?1487681215" }
     //komentarze: { type: Array }
 });

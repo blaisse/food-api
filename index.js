@@ -33,6 +33,8 @@ require('./routes/restaurant')(app, requireAuth);
 require('./routes/user')(app);
 require('./routes/order')(app, requireAuth);
 
+// app.get();
+
 app.listen(port, () => {
     console.log('food api running');
 });
