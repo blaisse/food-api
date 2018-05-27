@@ -1,3 +1,5 @@
+const http = require('http');
+const socketIO = require('socket.io');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -19,6 +21,8 @@ const passportService = require('./passport');
 const requireAuth = passport.authenticate('jwt', { session: false });
 
 const app = express();
+const server = http.createServer(app);
+const io = socketIO(server);
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
@@ -28,13 +32,21 @@ app.use(function(req, res, next) {
     next();
 });
 
+io.on('connection', (socket) => {
+    console.log('socket connected');
+    socket.on('join', (id) => {
+        console.log('huh?', id);
+        socket.join(id);
+    });
+});
+
 require('./routes/auth')(app);
 require('./routes/restaurant')(app, requireAuth);
 require('./routes/user')(app);
-require('./routes/order')(app, requireAuth);
+require('./routes/order')(app, requireAuth, io);
 
 // app.get();
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log('food api running');
 });

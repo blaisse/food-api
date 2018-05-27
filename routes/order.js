@@ -4,7 +4,7 @@ const Dish = mongoose.model('dishes');
 const User = mongoose.model('users');
 const Order = mongoose.model('orders');
 
-module.exports = (app, requireAuth) => {
+module.exports = (app, requireAuth, io) => {
 
     app.post('/orders', requireAuth, async (req, res) => {
         //Populate orders
@@ -63,7 +63,10 @@ module.exports = (app, requireAuth) => {
                 user.zamowienia.unshift(order);
                 restaurant.zamowienia.unshift(order);
 
-                Promise.all([ order.save(), restaurant.save() ]);
+                //After saving the order - send a notification to restaurant
+                await Promise.all([ order.save(), restaurant.save() ]);
+                console.log('restaurant id', restaurant.id);
+                io.to(restaurant.id).emit('emitOrder', order, user);
             });
             //
             user.save().then((sUser) => {

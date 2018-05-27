@@ -130,20 +130,41 @@ module.exports = (app, requireAuth) => {
     });
 
     app.post('/edytujdanie', async (req, res) => {
-        const restauracja = await Restaurant.findOne({ _id: req.body.id });
+        const restauracja = await Restaurant.findOne({ _id: req.body.id }, { zamowienia: 0 }).populate({
+            path: "menu"
+        });
         if(restauracja){
-            const rodzaj = req.body.rodzaj;
-            const danie = req.body.danie;
+            // console.log('w', restauracja);
+            const { dishId, rodzaj, danie } = req.body;
+            const dish = await Dish.findById(dishId, { komentarze: 0 });
+            dish.nazwa = danie.nazwa;
+            dish.cena = danie.cena;
+            dish.czas = danie.czas;
+            dish.img = danie.img;
+            dish.rodzaj = rodzaj;
+            // console.log('dish', dish);
 
-            const resztaDan = restauracja.menu[rodzaj].filter((item) => {
-                return item.nazwa !== danie.nazwa;
-            });
+            await dish.save();
+            res.send(dish);
 
-            resztaDan.push(danie);
-            restauracja.menu[rodzaj] = resztaDan;
-            restauracja.save().then(() => {
-                res.send(restauracja);
-            });
+            // let comments = [];
+            // const resztaDan = restauracja.menu.filter((item) => {
+            //     if(item._id === dishId){
+            //         comments = item.komentarze;
+            //     }
+            //     return item._id !== dishId;
+            // });
+            // console.log('comments', comments);
+            //
+            // danie.komentarze = comments;
+            // danie.rodzaj = rodzaj;
+            //
+            // resztaDan.push(danie);
+            // restauracja.menu = resztaDan;
+            // restauracja.save().then(() => {
+            //     res.send(restauracja);
+            // });
+
             // const doEdycji = restauracja.menu[rodzaj].filter((item) => {
             //     return item.nazwa === danie.nazwa;
             // });
