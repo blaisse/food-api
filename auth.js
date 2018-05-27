@@ -35,7 +35,7 @@ exports.signupRestaurant = async (req, res, next) => {
     }
     let newAccount;
     if(type === 'restaurant'){
-        newAccount = new Restaurant({ nazwa, password, adres });
+        newAccount = new Restaurant({ nazwa, password, adres, x: req.body.x, y: req.body.y });
     } else if(type === 'user'){
         newAccount = new User({ nazwa, password, adres });
     }
